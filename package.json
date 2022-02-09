@@ -14,6 +14,10 @@
     "@types/react-dom": "^17.0.11",
     "@types/styled-components": "^5.1.22",
     "axios": "^0.25.0",
+<<<<<<< Updated upstream
+    "gh-pages": "^3.2.3",
+=======
+>>>>>>> Stashed changes
     "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -23,6 +27,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -b master -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -45,5 +51,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "homepage": "https://snthsh.github.io/react-typescript-quiz"
 }
