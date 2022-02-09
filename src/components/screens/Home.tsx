@@ -3,7 +3,7 @@ import { capitalize } from '../../utils';
 //Styles
 import { Wrapper } from './Home.styles';
 //Types
-import { Question, Activity } from '../../types/Types';
+import { Activity } from '../../types/Types';
 
 type Props = {
   heading: string;
