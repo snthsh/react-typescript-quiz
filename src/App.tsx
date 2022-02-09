@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
+import axios from 'axios';
 //Constants
 import { BUTTONS_ARRAY, TOTAL_QUESTIONS } from './constants';
 //Styles
@@ -36,14 +37,25 @@ const App = () => {
     setLoading(true);
     setGameOver(false);
 
-    fetch('/interview.mock.data/payload.json')
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
+    axios({
+      method: 'get',
+      //baseURL: 'https://s3.eu-west-2.amazonaws.com',
+      //url: 'https://s3.eu-west-2.amazonaws.com/interview.mock.data/payload.json',
+      url: 'https://react-typescript-quiz.free.beeceptor.com/api/quiz',
+      headers: {
+        'access-control-allow-origin': '*',
+        'content-type': 'application/json',
+      },
+    })
+      .then((response) => {
+        //console.log('response--->', response);
+        const { data } = response;
         setQuizData(data);
         setHeading(data.name);
         setActivities(data.activities);
+      })
+      .then((error) => {
+        console.log('error--->', error);
       });
     setLoading(false);
   }, []);
