@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
+import axios from 'axios';
 //Constants
 import { BUTTONS_ARRAY, TOTAL_QUESTIONS } from './constants';
 //Styles
@@ -24,11 +25,11 @@ const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [quizData, setQuizData] = useState<QuizData | any>({});
   const [heading, setHeading] = useState<string>('');
-  const [activities, setActivities] = useState([]);
-  const [activity, setActivity] = useState<String | any>('Activity One');
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [activity, setActivity] = useState<string | any>('Activity One');
   const [questions, setQuestions] = useState<Question[]>([]);
   const [number, setNumber] = useState<number>(0);
-  const [userAnswers, setUserAnswers] = useState<any>([]);
+  const [userAnswers, setUserAnswers] = useState<AnswerObject[] | any>([]);
   const [gameOver, setGameOver] = useState<boolean>(true);
 
   //start by fetching quiz data
@@ -36,14 +37,25 @@ const App = () => {
     setLoading(true);
     setGameOver(false);
 
-    fetch('/interview.mock.data/payload.json')
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
+    axios({
+      method: 'get',
+      //baseURL: 'https://s3.eu-west-2.amazonaws.com',
+      //url: 'https://s3.eu-west-2.amazonaws.com/interview.mock.data/payload.json',
+      url: 'https://react-typescript-quiz.free.beeceptor.com/api/quiz',
+      headers: {
+        'access-control-allow-origin': '*',
+        'content-type': 'application/json',
+      },
+    })
+      .then((response) => {
+        //console.log('response--->', response);
+        const { data } = response;
         setQuizData(data);
         setHeading(data.name);
         setActivities(data.activities);
+      })
+      .then((error) => {
+        console.log('error--->', error);
       });
     setLoading(false);
   }, []);
@@ -82,7 +94,7 @@ const App = () => {
       setUserAnswers((prev) => {
         console.log('setUserAnswers--->');
         console.log(prev.concat([answerObject]));
-        return prev.concat([answerObject]);
+        return [...prev, answerObject];
       });
       setNumber(number + 1);
     }
@@ -100,9 +112,9 @@ const App = () => {
 
   const selectActivity = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    // console.log('event.selectActivity--->');
-    // console.log(event.currentTarget.textContent);
-    const selectedActivity = event.currentTarget.textContent || null;
+    console.log('event.selectActivity--->');
+    console.log(event.currentTarget.textContent);
+    const selectedActivity = event.currentTarget.textContent;
     if (!gameOver) {
       setActivity(selectedActivity);
       const questions = getQuestions();
