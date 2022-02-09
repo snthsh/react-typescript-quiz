@@ -10,7 +10,7 @@ import Questions from './components/screens/Questions';
 import Home from './components/screens/Home';
 import Score from './components/screens/Score';
 //Utils
-import { sortArray } from './utils';
+import { sortArray, capitalCaseByWords } from './utils';
 //Types
 import {
   QuizData,
@@ -102,11 +102,14 @@ const App = () => {
 
   const getQuestions = () => {
     console.log('quizData--->', quizData);
+    console.log('activity--->preobelm--->', activity);
     const activityArray = _.filter(quizData.activities, {
       activity_name: activity,
     });
+    console.log('activityArray--->', activityArray);
     //return the filtered array's first element (as there're only two activity elements)
     const questions = activityArray[0].questions;
+    console.log('questions--->', questions);
     return sortArray(questions);
   };
 
@@ -114,15 +117,22 @@ const App = () => {
     event.preventDefault();
     console.log('event.selectActivity--->');
     console.log(event.currentTarget.textContent);
-    const selectedActivity = event.currentTarget.textContent;
-    if (!gameOver) {
-      setActivity(selectedActivity);
-      const questions = getQuestions();
-      setQuestions(questions);
-      setNumber(number);
-      setScreen('QUESTION');
-      console.log('selected activity questions --->');
-      console.log(getQuestions());
+    if (event.currentTarget.textContent !== null) {
+      const activityWordsInArray = event.currentTarget.textContent.split(' ');
+      if (activityWordsInArray.length > 0) {
+        const selectedActivity = capitalCaseByWords(activityWordsInArray);
+        if (!gameOver) {
+          console.log('selectedActivity--->after-capitalcase-->');
+          console.log(selectedActivity);
+          setActivity(selectedActivity);
+          const questions = getQuestions();
+          setQuestions(questions);
+          setNumber(number);
+          setScreen('QUESTION');
+          console.log('selected activity questions --->');
+          console.log(getQuestions());
+        }
+      }
     }
   };
 
