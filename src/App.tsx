@@ -25,11 +25,11 @@ const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [quizData, setQuizData] = useState<QuizData | any>({});
   const [heading, setHeading] = useState<string>('');
-  const [activities, setActivities] = useState([]);
-  const [activity, setActivity] = useState<String | any>('Activity One');
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [activity, setActivity] = useState<string | any>('Activity One');
   const [questions, setQuestions] = useState<Question[]>([]);
   const [number, setNumber] = useState<number>(0);
-  const [userAnswers, setUserAnswers] = useState<any>([]);
+  const [userAnswers, setUserAnswers] = useState<AnswerObject[] | any>([]);
   const [gameOver, setGameOver] = useState<boolean>(true);
 
   //start by fetching quiz data
@@ -94,7 +94,7 @@ const App = () => {
       setUserAnswers((prev) => {
         console.log('setUserAnswers--->');
         console.log(prev.concat([answerObject]));
-        return prev.concat([answerObject]);
+        return [...prev, answerObject];
       });
       setNumber(number + 1);
     }
@@ -112,9 +112,9 @@ const App = () => {
 
   const selectActivity = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    // console.log('event.selectActivity--->');
-    // console.log(event.currentTarget.textContent);
-    const selectedActivity = event.currentTarget.textContent || null;
+    console.log('event.selectActivity--->');
+    console.log(event.currentTarget.textContent);
+    const selectedActivity = event.currentTarget.textContent;
     if (!gameOver) {
       setActivity(selectedActivity);
       const questions = getQuestions();
