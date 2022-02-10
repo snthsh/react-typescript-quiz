@@ -117,7 +117,6 @@ const App = () => {
     event.preventDefault();
     console.log('event.selectActivity--->');
     console.log(event.currentTarget.textContent);
-<<<<<<< Updated upstream
     if (event.currentTarget.textContent !== null) {
       const activityWordsInArray = event.currentTarget.textContent.split(' ');
       if (activityWordsInArray.length > 0) {
@@ -134,17 +133,6 @@ const App = () => {
           console.log(getQuestions());
         }
       }
-=======
-    const selectedActivity = event.currentTarget.textContent;
-    if (!gameOver) {
-      setActivity(selectedActivity);
-      const questions = getQuestions();
-      setQuestions(questions);
-      setNumber(number);
-      setScreen('QUESTION');
-      console.log('selected activity questions --->');
-      console.log(getQuestions());
->>>>>>> Stashed changes
     }
   };
 
