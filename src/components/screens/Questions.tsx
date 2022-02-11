@@ -1,15 +1,17 @@
 import React from 'react';
-//Styles
+// Styles
 import { Wrapper, ButtonWrapper } from './Questions.styles';
 
 type Props = {
   activity: string;
   number: number;
   question: any;
+  // eslint-disable-next-line no-unused-vars
   callback: (e: React.MouseEvent<HTMLButtonElement>) => void;
   buttonsArray: string[];
 };
 
+// eslint-disable-next-line
 const Questions: React.FC<Props> = ({
   activity,
   number,
@@ -23,7 +25,7 @@ const Questions: React.FC<Props> = ({
     <p dangerouslySetInnerHTML={{ __html: question?.stimulus }} />
     <ButtonWrapper>
       {buttonsArray.map((button) => (
-        <button key={button} value={button} onClick={callback}>
+        <button type="button" key={button} value={button} onClick={callback}>
           <span dangerouslySetInnerHTML={{ __html: button }} />
         </button>
       ))}

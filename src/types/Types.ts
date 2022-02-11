@@ -14,6 +14,20 @@ export type Question = {
   feedback: string;
 };
 
+export type QuestionTypeOne = {
+  is_correct: boolean;
+  stimulus: string;
+  order: number;
+  user_answers: string[];
+  feedback: string;
+};
+
+export type QuestionTypeTwo = {
+  round_title: string;
+  order: number;
+  questions: QuestionTypeOne[];
+};
+
 export type ActivityObject = {
   activity_name: string;
   order: number;
