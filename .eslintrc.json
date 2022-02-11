@@ -25,6 +25,17 @@
         "ts": "never",
         "tsx": "never"
       }
+    ],
+    "react/jsx-filename-extension": [
+      1,
+      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+    ],
+    "indent": ["error", 2],
+    "spaced-comment": ["error", "always"],
+    "operator-linebreak": [
+      2,
+      "before",
+      { "overrides": { "?": "after", "+=": "none" } }
     ]
   },
   "settings": {
@@ -32,6 +43,12 @@
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
-    }
+    },
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "function-declaration"
+      }
+    ]
   }
 }

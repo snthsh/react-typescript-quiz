@@ -15,24 +15,22 @@ import { sortArray, capitalCaseByWords } from './utils';
 import {
   QuizData,
   Question,
-  Activity,
+  ActivityObject,
   AnswerObject,
   Screen,
 } from './types/Types';
 
-const App = () => {
-  const [isActivitySelected, setIsActivitySelected] = useState<boolean>(false);
+function App() {
   const [screen, setScreen] = useState<Screen>('HOME');
   const [loading, setLoading] = useState<boolean>(false);
   const [quizData, setQuizData] = useState<QuizData | any>({});
   const [heading, setHeading] = useState<string>('');
-  const [activities, setActivities] = useState<Activity[]>([]);
+  const [activities, setActivities] = useState<ActivityObject | any>();
   const [activity, setActivity] = useState<string | any>('Activity One');
   const [questions, setQuestions] = useState<Question[]>([]);
   const [number, setNumber] = useState<number>(0);
   const [userAnswers, setUserAnswers] = useState<AnswerObject[] | any>([]);
   const [gameOver, setGameOver] = useState<boolean>(true);
-  const [name, setName] = useState<string>('');
 
   // start by fetching quiz data
   useEffect(() => {
@@ -53,8 +51,8 @@ const App = () => {
         setHeading(data.name);
         setActivities(data.activities);
       })
-      .then((error) => {
-        console.log('error--->', error);
+      .then(() => {
+        // console.error('error--->', error);
       });
     setLoading(false);
   }, []);
@@ -82,9 +80,7 @@ const App = () => {
       };
       // save answer in the array for user user answers
       // @ts-ignore
-      setUserAnswers((prev) => {
-        return [...prev, answerObject];
-      });
+      setUserAnswers((prev) => [...prev, answerObject]);
       setNumber(number + 1);
     }
   };
@@ -94,11 +90,11 @@ const App = () => {
       activity_name: activity,
     });
     // return the filtered array's first element (as there're only two activity elements)
-    const { questions } = activityArray[0];
-    return sortArray(questions);
+    // const { questions } = activityArray[0];
+    return sortArray(activityArray[0].questions);
   };
 
-  const selectActivity = async (event: React.MouseEvent<HTMLAnchorElement>) => {
+  const selectActivity = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (event.currentTarget.textContent !== null) {
       const activityWordsInArray = event.currentTarget.textContent.split(' ');
@@ -106,8 +102,8 @@ const App = () => {
         const selectedActivity = capitalCaseByWords(activityWordsInArray);
         if (!gameOver) {
           setActivity(selectedActivity);
-          const questions = getQuestions();
-          setQuestions(questions);
+          // const questions = getQuestions();
+          setQuestions(getQuestions());
           setNumber(number);
           setScreen('QUESTION');
         }
@@ -115,6 +111,7 @@ const App = () => {
     }
   };
 
+  // eslint-disable-next-line no-unused-vars
   const startOver = (event: React.MouseEvent<HTMLButtonElement>) => {
     setScreen('HOME');
     setGameOver(false);
@@ -125,11 +122,6 @@ const App = () => {
 
   return (
     <>
-      <p>
-        name is----
-        {name}
-        ---
-      </p>
       <GlobalStyle />
       {loading && <span>Loading...</span>}
 
@@ -138,7 +130,6 @@ const App = () => {
           heading={heading}
           activities={activities}
           selectActivity={selectActivity}
-          // selectActivity={() => setName('santhosh')}
         />
       )}
 
@@ -161,6 +152,6 @@ const App = () => {
       )}
     </>
   );
-};
+}
 
 export default App;

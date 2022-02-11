@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
+const Wrapper = styled.div`
   width: 400px;
   height: 400px;
   background: white;
@@ -24,9 +24,8 @@ export const Wrapper = styled.div`
   }
   ul > li {
     width: 100%;
-    background: green;
   }
-  ul > li > a {
+  ul > li > button {
     text-decoration: none;
     background: #fcfdff;
     height: 50px;
@@ -36,5 +35,9 @@ export const Wrapper = styled.div`
     text-align: center;
     color: #53adfc;
     border: 1px solid #e8f4fe;
+    width: 100%;
+    cursor: pointer;
   }
 `;
+
+export default Wrapper;

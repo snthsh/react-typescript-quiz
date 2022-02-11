@@ -1,16 +1,18 @@
 import React from 'react';
 import { capitalize } from '../../utils';
-//Styles
-import { Wrapper } from './Home.styles';
-//Types
-import { Activity } from '../../types/Types';
+// Styles
+import Wrapper from './Home.styles';
+// Types
+import { ActivityObject } from '../../types/Types';
 
 type Props = {
   heading: string;
-  activities: Activity[];
-  selectActivity: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  activities: ActivityObject[];
+  // eslint-disable-next-line no-unused-vars
+  selectActivity: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
+// eslint-disable-next-line
 const HomeScreen: React.FC<Props> = ({
   heading,
   activities,
@@ -19,14 +21,15 @@ const HomeScreen: React.FC<Props> = ({
   <Wrapper>
     <h1>{heading}</h1>
     <ul>
-      {activities &&
-        activities.map((activity: Activity) => (
+      {activities
+        && activities.map((activity: ActivityObject) => (
           <li key={activity.activity_name}>
             {
-              //eslint-disable-next-line
+              // eslint-disable-next-line
             }
-            <a
-              href={'#'}
+            <button
+              type="button"
+              aria-label={activity.activity_name}
               onClick={selectActivity}
               dangerouslySetInnerHTML={{
                 __html: capitalize(activity.activity_name),

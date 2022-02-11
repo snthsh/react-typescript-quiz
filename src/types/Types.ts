@@ -1,7 +1,7 @@
 export type Screen = 'HOME' | 'QUESTION' | 'SCORE';
 
 export type QuizData = {
-  activities: Activity[];
+  activities: ActivityObject[];
   heading: string;
   name: string;
 };
@@ -14,7 +14,7 @@ export type Question = {
   feedback: string;
 };
 
-export type Activity = {
+export type ActivityObject = {
   activity_name: string;
   order: number;
   questions: Question[];
