@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import _ from 'lodash';
 import axios from 'axios';
 // Constants
-import { BUTTONS_ARRAY } from './constants';
+import { ACTIVITY, BUTTONS_ARRAY } from './constants';
 // Styles
 import GlobalStyle from './App.styles';
 // Components
@@ -107,9 +107,9 @@ function App() {
     }
   };
 
-  const getQuestions = (activity: string) => {
+  const getQuestions = () => {
     //Get questions if 'Activity One'
-    if (activityRef.current === activity) {
+    if (activityRef.current == ACTIVITY.ONE) {
       const activityArray = _.filter(quizData.activities, {
         activity_name: activityRef.current
       });
@@ -118,7 +118,7 @@ function App() {
     }
 
     //Get questions if 'Activity Two'
-    if (activityRef.current === activity) {
+    if (activityRef.current == ACTIVITY.TWO) {
       const activityArray = _.filter(quizData.activities, {
         activity_name: activityRef.current
       });
@@ -146,18 +146,18 @@ function App() {
         setActivity(selectedActivity);
 
         //Determine the flow based on existence of 'questions' property
-        const singleQuestionElement = getQuestions(activity)[0];
+        const singleQuestionElement = getQuestions()[0];
 
         // Flow-1
         if (singleQuestionElement?.questions === undefined) {
-          setQuestions(getQuestions(activity));
+          setQuestions(getQuestions());
           setNumber(number);
           setScreen('QUESTION');
         }
 
         // Flow-2
         if (singleQuestionElement?.questions !== undefined) {
-          setQuestions(getQuestions(activity));
+          setQuestions(getQuestions());
           setNumber(number);
           setScreen('QUESTION');
         }
