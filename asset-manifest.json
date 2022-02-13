@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/react-typescript-quiz/static/js/main.21bebdfc.js",
+    "main.js": "/react-typescript-quiz/static/js/main.ed44eed4.js",
     "index.html": "/react-typescript-quiz/index.html",
-    "main.21bebdfc.js.map": "/react-typescript-quiz/static/js/main.21bebdfc.js.map"
+    "main.ed44eed4.js.map": "/react-typescript-quiz/static/js/main.ed44eed4.js.map"
   },
   "entrypoints": [
-    "static/js/main.21bebdfc.js"
+    "static/js/main.ed44eed4.js"
   ]
 }
