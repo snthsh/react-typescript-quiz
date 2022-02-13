@@ -76,10 +76,6 @@ function App() {
     setLoading(false);
   }, []);
 
-  // useEffect(() => {
-  //   console.log('userAnswers----->', userAnswers);
-  // }, [userAnswers]);
-
   // restrict all handleClicks to be exclusively on HTMLButton elements
   const checkAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!gameOver) {

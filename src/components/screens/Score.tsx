@@ -19,7 +19,7 @@ const Score: FC<Props> = ({ activity, userAnswers, startOver }) => {
     userAnswers,
     (answer) => answer.round_title === 'Round 1'
   );
-  console.log('groupArrayByRounds', groupArrayByRounds);
+  
   return (
     <Wrapper>
       <h3 dangerouslySetInnerHTML={{ __html: activity }} />
