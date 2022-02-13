@@ -65,15 +65,19 @@ function App() {
         setHeading(data.name);
         setActivities(data.activities);
       })
-      .then(() => {
-        // console.error('error--->', error);
+      .catch((error) => {
+        if (error.response) {
+          console.error('error:' + error.response.data);
+        } else {
+          console.error('error:' + error.message);
+        }
+        console.log(error.config);
       });
     setLoading(false);
   }, []);
 
   // restrict all handleClicks to be exclusively on HTMLButton elements
   const checkAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('---------------->>>>--------->>>>', number);
     if (!gameOver) {
       // user answer
       const answer = event.currentTarget.value === 'CORRECT';
@@ -84,20 +88,18 @@ function App() {
         question: questions[number].stimulus,
         answer,
         correct,
-        correct_answer: questions[number].feedback,
+        correct_answer: questions[number].feedback
       };
       // save answer in the array for user user answers
       setUserAnswers((prev: any) => [...prev, answerObject]);
-      console.log(
-        `number-->${number + 1}---questions.length--->${questions.length}`
-      );
-      if ((number+1) < questions.length) {
-        console.log(`setting-->${number + 1}`);
+
+      // Add 1 to number to view the next question
+      if (number + 1 < questions.length) {
         setNumber(number + 1);
       }
-      
-      if ((number + 1) === questions.length) {
-        console.log('setting-->0');
+      // if there's no question to display in next step, move to score screen and
+      // reset page number to 0
+      if (number + 1 === questions.length) {
         setScreen('SCORE');
         setGameOver(true);
         setNumber(0);
@@ -106,27 +108,23 @@ function App() {
   };
 
   const getQuestions = (activity: string) => {
-    console.log(
-      'here in activity-->' +
-        activity +
-        '--activityRef.current-->' +
-        activityRef.current
-    );
-    if (activityRef.current === 'Activity One') {
-      console.log('HERE!!!!!!!! - One');
+    //Get questions if 'Activity One'
+    if (activityRef.current === activity) {
       const activityArray = _.filter(quizData.activities, {
         activity_name: activityRef.current
       });
       return activityArray[0].questions;
+      // return sortArray(activityArray[0].questions);
     }
-    if (activityRef.current === 'Activity Two') {
-      console.log('HERE!!!!!!!! - Two');
+
+    //Get questions if 'Activity Two'
+    if (activityRef.current === activity) {
       const activityArray = _.filter(quizData.activities, {
         activity_name: activityRef.current
       });
-
       const outerQuestions = activityArray[0].questions;
-      const flattenedQuestions:any[] = [];
+      const flattenedQuestions: any[] = [];
+
       _.map(outerQuestions, (outerQuestion) => {
         const roundTitle = outerQuestion.round_title;
         const order = outerQuestion.order;
@@ -135,13 +133,8 @@ function App() {
         });
       });
 
-      console.log('flattenedQuestions--->');
-      console.log(flattenedQuestions);
       return flattenedQuestions;
     }
-    
-    // return the filtered array's first element (as there're only two activity elements)
-    // return sortArray(activityArray[0].questions);
   };
 
   const selectActivity = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -150,24 +143,13 @@ function App() {
       const activityWordsInArray = event.currentTarget.textContent.split(' ');
       if (activityWordsInArray.length > 0) {
         const selectedActivity = capitalCaseByWords(activityWordsInArray);
-        console.log(`selected--->${selectedActivity}<---`);
-        console.log(`default--->${activityRef.current}<---`);
-        // setActivity(selectedActivity);
         setActivity(selectedActivity);
-        console.log(`after setting--->${activityRef.current}<---`);
 
-        // const questions = getQuestions();
-        // console.log('selected questions-->', getQuestions());
-        // console.log('length-->', getQuestions().length > 0);
+        //Determine the flow based on existence of 'questions' property
         const singleQuestionElement = getQuestions(activity)[0];
-        // console.log('single question element');
-        // console.log(singleQuestionElement);
-        // console.log('own property--->');
-        // console.log(singleQuestionElement?.questions);
 
         // Flow-1
         if (singleQuestionElement?.questions === undefined) {
-          console.log('this is flow -1');
           setQuestions(getQuestions(activity));
           setNumber(number);
           setScreen('QUESTION');
@@ -175,7 +157,6 @@ function App() {
 
         // Flow-2
         if (singleQuestionElement?.questions !== undefined) {
-          console.log('this is flow -2');
           setQuestions(getQuestions(activity));
           setNumber(number);
           setScreen('QUESTION');
