@@ -20,8 +20,8 @@
   "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
     "react/jsx-filename-extension": "off",
-    "indent": [2, 2],
-    "linebreak-style": ["error", "unix"],
+    //"indent": [2, 2],
+    "indent": "off",
     "semi": ["error", "always"],
     "quotes": ["error", "single"],
     "no-console": "warn",
@@ -42,12 +42,12 @@
         "tsx": "never"
       }
     ],
-    "spaced-comment": ["error", "always"],
-    "operator-linebreak": [
-      2,
-      "before",
-      { "overrides": { "?": "after", "+=": "none" } }
-    ]
+    //"spaced-comment": ["error", "always"],
+    // "operator-linebreak": [2, "after", { "overrides": { ":": "before" } }]
+    //"operator-linebreak": "off"
+    "linebreak-style": 0,
+    "operator-linebreak": "off",
+    "object-curly-spacing": "off"
   },
   "settings": {
     "import/resolver": {
