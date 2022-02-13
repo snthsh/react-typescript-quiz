@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-export const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
   html{
     height:100%;
   }
@@ -16,3 +16,5 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 0.9rem;
   }
 `;
+
+export default GlobalStyle;

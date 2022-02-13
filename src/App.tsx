@@ -4,7 +4,7 @@ import axios from 'axios';
 // Constants
 import { BUTTONS_ARRAY, TOTAL_QUESTIONS } from './constants';
 // Styles
-import { GlobalStyle } from './App.styles';
+import GlobalStyle from './App.styles';
 // Components
 import Questions from './components/screens/Questions';
 import Home from './components/screens/Home';
@@ -92,8 +92,7 @@ function App() {
         correct_answer: questions[number].feedback,
       };
       // save answer in the array for user user answers
-      // @ts-ignore
-      setUserAnswers((prev) => [...prev, answerObject]);
+      setUserAnswers((prev:any) => [...prev, answerObject]);
       setNumber(number + 1);
     }
   };
@@ -128,18 +127,26 @@ function App() {
         console.log('own property--->');
         console.log(singleQuestionElement?.questions);
 
+        // Flow-1
         if (singleQuestionElement?.questions === undefined) {
           console.log('this is flow -1');
+          setQuestions(getQuestions());
+          setNumber(number);
+          setScreen('QUESTION');
         }
 
-        setQuestions(getQuestions());
-        setNumber(number);
-        setScreen('QUESTION');
+        // Flow-2
+        if (singleQuestionElement?.questions !== undefined) {
+          console.log('this is flow -2');
+        }
+        // setQuestions(getQuestions());
+        // setNumber(number);
+        // setScreen('QUESTION');
       }
     }
   };
 
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line
   const startOver = (event: React.MouseEvent<HTMLButtonElement>) => {
     setScreen('HOME');
     setGameOver(false);
@@ -153,14 +160,9 @@ function App() {
       <GlobalStyle />
       {loading && <span>Loading...</span>}
 
-      {screen === 'HOME' && (
-        <Home
-          heading={heading}
-          activities={activities}
-          selectActivity={selectActivity}
-        />
-      )}
+      {screen === 'HOME' && <Home heading={heading} activities={activities} selectActivity={selectActivity} />}
 
+      {/* Flow-1 */}
       {screen === 'QUESTION' && questions?.questions === undefined && (
         <Questions
           activity={activity}
@@ -171,6 +173,7 @@ function App() {
         />
       )}
 
+      {/* Flow-2 */}
       {screen === 'QUESTION' && questions?.questions !== undefined && (
         <div>
           <h3>{questions[number].round_title}</h3>
@@ -184,13 +187,7 @@ function App() {
         </div>
       )}
 
-      {screen === 'SCORE' && (
-        <Score
-          activity={activity}
-          userAnswers={userAnswers}
-          startOver={startOver}
-        />
-      )}
+      {screen === 'SCORE' && <Score activity={activity} userAnswers={userAnswers} startOver={startOver} />}
     </>
   );
 }
