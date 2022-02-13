@@ -29,14 +29,14 @@ const Score: FC<Props> = ({ activity, userAnswers, startOver }) => {
         {_.map(groupArrayByRounds.true, (answer: any, index: number) => (
           <li key={answer.question}>
             <span>{`Q${index + 1}`}</span>
-            <span>{answer.correct ? 'true' : 'false'}</span>
+            <span>{answer.correct ? 'CORRECT' : 'FALSE'}</span>
           </li>
         ))}
         {userAnswers?.[1].round_title && <li key="ROUND 2">ROUND 2</li>}
         {_.map(groupArrayByRounds.false, (answer: any, index: number) => (
           <li key={answer.question}>
             <span>{`Q${index + 1}`}</span>
-            <span>{answer.correct ? 'true' : 'false'}</span>
+            <span>{answer.correct ? 'CORRECT' : 'FALSE'}</span>
           </li>
         ))}
       </ul>
