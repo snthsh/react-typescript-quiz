@@ -35,9 +35,10 @@ export type ActivityObject = {
 };
 
 export type AnswerObject = {
-    number: number;
-    question: string;
-    answer: string;
-    correct: boolean;
-    correct_answer: string;
+  number: number;
+  question: string;
+  answer: string;
+  correct: boolean;
+  correct_answer: string;
+  round_title?: string
 };

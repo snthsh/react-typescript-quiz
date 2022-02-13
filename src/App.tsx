@@ -76,6 +76,10 @@ function App() {
     setLoading(false);
   }, []);
 
+  // useEffect(() => {
+  //   console.log('userAnswers----->', userAnswers);
+  // }, [userAnswers]);
+
   // restrict all handleClicks to be exclusively on HTMLButton elements
   const checkAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!gameOver) {
@@ -83,12 +87,16 @@ function App() {
       const answer = event.currentTarget.value === 'CORRECT';
       // check answer with correct answer
       const correct = questions[number].is_correct === answer;
+      const round_title = questions[number]?.round_title
+        ? questions[number].round_title
+        : '';
       const answerObject = {
         number: number + 1,
         question: questions[number].stimulus,
         answer,
         correct,
-        correct_answer: questions[number].feedback
+        correct_answer: questions[number].feedback,
+        round_title: round_title
       };
       // save answer in the array for user user answers
       setUserAnswers((prev: any) => [...prev, answerObject]);
@@ -126,10 +134,10 @@ function App() {
       const flattenedQuestions: any[] = [];
 
       _.map(outerQuestions, (outerQuestion) => {
-        const roundTitle = outerQuestion.round_title;
+        const round_title = outerQuestion.round_title;
         const order = outerQuestion.order;
         _.map(outerQuestion.questions, (question) => {
-          flattenedQuestions.push({ ...question, roundTitle, order });
+          flattenedQuestions.push({ ...question, round_title, order });
         });
       });
 
@@ -169,7 +177,6 @@ function App() {
   const startOver = (event: React.MouseEvent<HTMLButtonElement>) => {
     setScreen('HOME');
     setGameOver(false);
-    setNumber(0);
     setQuestions([]);
     setUserAnswers([]);
   };
@@ -187,31 +194,25 @@ function App() {
       )}
       {/* Flow-1 */}
       {/* eslint-disable-next-line */}
-      {screen === 'QUESTION' && activity === 'Activity One' && (
-          <>
-            <div>santhosh1</div>
-            <Questions
-              activity={activity}
-              number={number}
-              question={questions[number]}
-              callback={checkAnswer}
-              buttonsArray={BUTTONS_ARRAY}
-            />
-          </>
-        )}
+      {screen === 'QUESTION' && activity === ACTIVITY.ONE && (
+        <Questions
+          activity={activity}
+          number={number}
+          question={questions[number]}
+          callback={checkAnswer}
+          buttonsArray={BUTTONS_ARRAY}
+        />
+      )}
       {/* Flow-2 */}
-      {screen === 'QUESTION' && activity === 'Activity Two' && (
-          <>
-            <div>santhosh2</div>
-            <Questions
-              activity={activity}
-              number={number}
-              question={questions[number]}
-              callback={checkAnswer}
-              buttonsArray={BUTTONS_ARRAY}
-            />
-          </>
-        )}
+      {screen === 'QUESTION' && activity === ACTIVITY.TWO && (
+        <Questions
+          activity={activity}
+          number={number}
+          question={questions[number]}
+          callback={checkAnswer}
+          buttonsArray={BUTTONS_ARRAY}
+        />
+      )}
       {screen === 'SCORE' && (
         <Score
           activity={activity}

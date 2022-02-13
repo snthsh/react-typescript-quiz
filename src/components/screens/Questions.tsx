@@ -1,6 +1,7 @@
 import React from 'react';
 // Styles
 import { Wrapper, ButtonWrapper } from './Questions.styles';
+import { capitalize } from '../../utils';
 
 type Props = {
   activity: string;
@@ -17,11 +18,17 @@ const Questions: React.FC<Props> = ({
   number,
   question,
   callback,
-  buttonsArray,
+  buttonsArray
 }) => (
   <Wrapper key={activity}>
-    <h3 dangerouslySetInnerHTML={{ __html: activity }} />
-    <h1>{`Q${number + 1}`}</h1>
+    <h3
+      dangerouslySetInnerHTML={{
+        __html: question.roundTitle
+          ? `${capitalize(activity)} / ${capitalize(question.roundTitle)}`
+          : capitalize(activity)
+      }}
+    />
+    <h1>{`Q${number + 1}.`}</h1>
     <p dangerouslySetInnerHTML={{ __html: question?.stimulus }} />
     <ButtonWrapper>
       {buttonsArray.map((button) => (
