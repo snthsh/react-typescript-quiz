@@ -111,21 +111,21 @@ function App() {
     if (event.currentTarget.textContent !== null) {
       const activityWordsInArray = event.currentTarget.textContent.split(' ');
       if (activityWordsInArray.length > 0) {
-          const selectedActivity = capitalCaseByWords(activityWordsInArray);
-          console.log(`selected--->${selectedActivity}<---`);
-          console.log(`default--->${activityRef.current}<---`);
-          // setActivity(selectedActivity);
-          setActivity(selectedActivity);
-          console.log(`after setting--->${activityRef.current}<---`);
+        const selectedActivity = capitalCaseByWords(activityWordsInArray);
+        console.log(`selected--->${selectedActivity}<---`);
+        console.log(`default--->${activityRef.current}<---`);
+        // setActivity(selectedActivity);
+        setActivity(selectedActivity);
+        console.log(`after setting--->${activityRef.current}<---`);
 
-          // const questions = getQuestions();
-          console.log('selected questions-->', getQuestions());
-          console.log('length-->', getQuestions().length > 0);
-          const singleQuestionElement = getQuestions()[0];
-          console.log('single question element');
-          console.log(singleQuestionElement);
-          console.log('own property--->');
-          console.log(singleQuestionElement?.questions);
+        // const questions = getQuestions();
+        console.log('selected questions-->', getQuestions());
+        console.log('length-->', getQuestions().length > 0);
+        const singleQuestionElement = getQuestions()[0];
+        console.log('single question element');
+        console.log(singleQuestionElement);
+        console.log('own property--->');
+        console.log(singleQuestionElement?.questions);
 
         // Flow-1
         if (singleQuestionElement?.questions === undefined) {
@@ -156,9 +156,9 @@ function App() {
   };
 
   return (
-      <>
-          <GlobalStyle />
-          {loading && <span>Loading...</span>}
+    <>
+      <GlobalStyle />
+      {loading && <span>Loading...</span>}
 
       {screen === 'HOME' && <Home heading={heading} activities={activities} selectActivity={selectActivity} />}
 
