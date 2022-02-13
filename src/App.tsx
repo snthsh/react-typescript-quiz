@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import _ from 'lodash';
 import axios from 'axios';
 // Constants
-import { BUTTONS_ARRAY, TOTAL_QUESTIONS } from './constants';
+import { BUTTONS_ARRAY } from './constants';
 // Styles
 import GlobalStyle from './App.styles';
 // Components
@@ -34,7 +34,8 @@ function App() {
   const [activity, _setActivity] = useState<Activity | any>('');
   const [questions, setQuestions] = useState<
     QuestionTypeOne[] | QuestionTypeTwo[] | any
-  >([]);
+    >([]);
+  //const [totalQuestions, setTotalQuestions] = useState<number>();
   const [number, setNumber] = useState<number>(0);
   const [userAnswers, setUserAnswers] = useState<AnswerObject[] | any>([]);
   const [gameOver, setGameOver] = useState<boolean>(true);
@@ -70,15 +71,9 @@ function App() {
     setLoading(false);
   }, []);
 
-  useEffect(() => {
-    if (!gameOver && userAnswers.length === TOTAL_QUESTIONS) {
-      setScreen('SCORE');
-      setGameOver(true);
-    }
-  }, [userAnswers, gameOver]);
-
   // restrict all handleClicks to be exclusively on HTMLButton elements
   const checkAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log('---------------->>>>--------->>>>', number);
     if (!gameOver) {
       // user answer
       const answer = event.currentTarget.value === 'CORRECT';
@@ -92,8 +87,21 @@ function App() {
         correct_answer: questions[number].feedback,
       };
       // save answer in the array for user user answers
-      setUserAnswers((prev:any) => [...prev, answerObject]);
-      setNumber(number + 1);
+      setUserAnswers((prev: any) => [...prev, answerObject]);
+      console.log(
+        `number-->${number + 1}---questions.length--->${questions.length}`
+      );
+      if ((number+1) < questions.length) {
+        console.log(`setting-->${number + 1}`);
+        setNumber(number + 1);
+      }
+      
+      if ((number + 1) === questions.length) {
+        console.log('setting-->0');
+        setScreen('SCORE');
+        setGameOver(true);
+        setNumber(0);
+      }
     }
   };
 
@@ -198,9 +206,7 @@ function App() {
       )}
       {/* Flow-1 */}
       {/* eslint-disable-next-line */}
-      {screen === 'QUESTION' &&
-        questions?.questions === undefined &&
-        activity === 'Activity One' && (
+      {screen === 'QUESTION' && activity === 'Activity One' && (
           <>
             <div>santhosh1</div>
             <Questions
