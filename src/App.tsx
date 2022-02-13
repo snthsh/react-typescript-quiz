@@ -4,7 +4,7 @@ import axios from 'axios';
 // Constants
 import { BUTTONS_ARRAY, TOTAL_QUESTIONS } from './constants';
 // Styles
-import { GlobalStyle } from './App.styles';
+import GlobalStyle from './App.styles';
 // Components
 import Questions from './components/screens/Questions';
 import Home from './components/screens/Home';
@@ -112,29 +112,37 @@ function App() {
     if (event.currentTarget.textContent !== null) {
       const activityWordsInArray = event.currentTarget.textContent.split(' ');
       if (activityWordsInArray.length > 0) {
-        const selectedActivity = capitalCaseByWords(activityWordsInArray);
-        console.log(`selected--->${selectedActivity}<---`);
-        console.log(`default--->${activityRef.current}<---`);
-        // setActivity(selectedActivity);
-        setActivity(selectedActivity);
-        console.log(`after setting--->${activityRef.current}<---`);
+          const selectedActivity = capitalCaseByWords(activityWordsInArray);
+          console.log(`selected--->${selectedActivity}<---`);
+          console.log(`default--->${activityRef.current}<---`);
+          // setActivity(selectedActivity);
+          setActivity(selectedActivity);
+          console.log(`after setting--->${activityRef.current}<---`);
 
-        // const questions = getQuestions();
-        console.log('selected questions-->', getQuestions());
-        console.log('length-->', getQuestions().length > 0);
-        const singleQuestionElement = getQuestions()[0];
-        console.log('single question element');
-        console.log(singleQuestionElement);
-        console.log('own property--->');
-        console.log(singleQuestionElement?.questions);
+          // const questions = getQuestions();
+          console.log('selected questions-->', getQuestions());
+          console.log('length-->', getQuestions().length > 0);
+          const singleQuestionElement = getQuestions()[0];
+          console.log('single question element');
+          console.log(singleQuestionElement);
+          console.log('own property--->');
+          console.log(singleQuestionElement?.questions);
 
-        if (singleQuestionElement?.questions === undefined) {
-          console.log('this is flow -1');
-        }
+          // Flow-1
+          if (singleQuestionElement?.questions === undefined) {
+            console.log('this is flow -1');
+            setQuestions(getQuestions());
+            setNumber(number);
+            setScreen('QUESTION');
+          }
 
-        setQuestions(getQuestions());
-        setNumber(number);
-        setScreen('QUESTION');
+          // Flow-2
+          if (singleQuestionElement?.questions !== undefined) {
+            console.log('this is flow -1');
+          }
+          // setQuestions(getQuestions());
+          // setNumber(number);
+          // setScreen('QUESTION');
       }
     }
   };
@@ -149,49 +157,39 @@ function App() {
   };
 
   return (
-    <>
-      <GlobalStyle />
-      {loading && <span>Loading...</span>}
+      <>
+          <GlobalStyle />
+          {loading && <span>Loading...</span>}
 
-      {screen === 'HOME' && (
-        <Home
-          heading={heading}
-          activities={activities}
-          selectActivity={selectActivity}
-        />
-      )}
+          {screen === 'HOME' && <Home heading={heading} activities={activities} selectActivity={selectActivity} />}
 
-      {screen === 'QUESTION' && questions?.questions === undefined && (
-        <Questions
-          activity={activity}
-          number={number}
-          question={questions[number]}
-          callback={checkAnswer}
-          buttonsArray={BUTTONS_ARRAY}
-        />
-      )}
+          {/* Flow-1 */}
+          {screen === 'QUESTION' && questions?.questions === undefined && (
+              <Questions
+                  activity={activity}
+                  number={number}
+                  question={questions[number]}
+                  callback={checkAnswer}
+                  buttonsArray={BUTTONS_ARRAY}
+              />
+          )}
 
-      {screen === 'QUESTION' && questions?.questions !== undefined && (
-        <div>
-          <h3>{questions[number].round_title}</h3>
-          <Questions
-            activity={activity}
-            number={number}
-            question={questions.questions[number]}
-            callback={checkAnswer}
-            buttonsArray={BUTTONS_ARRAY}
-          />
-        </div>
-      )}
+          {/* Flow-2 */}
+          {screen === 'QUESTION' && questions?.questions !== undefined && (
+              <div>
+                  <h3>{questions[number].round_title}</h3>
+                  <Questions
+                      activity={activity}
+                      number={number}
+                      question={questions.questions[number]}
+                      callback={checkAnswer}
+                      buttonsArray={BUTTONS_ARRAY}
+                  />
+              </div>
+          )}
 
-      {screen === 'SCORE' && (
-        <Score
-          activity={activity}
-          userAnswers={userAnswers}
-          startOver={startOver}
-        />
-      )}
-    </>
+          {screen === 'SCORE' && <Score activity={activity} userAnswers={userAnswers} startOver={startOver} />}
+      </>
   );
 }
 

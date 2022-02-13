@@ -1,21 +1,37 @@
 {
   "env": {
-    "browser": true,
-    "es2021": true
+    "node": true,
+    "es6": true,
+    "jest": true
   },
-  "extends": ["plugin:react/recommended", "airbnb"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "prettier"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": "latest",
-    "sourceType": "module"
+    "ecmaVersion": "2018",
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
+    "react/jsx-filename-extension": "off",
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"],
     "semi": ["error", "always"],
     "quotes": ["error", "single"],
+    "no-console": "warn",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }
+    ],
+    "@typescript-eslint/explicit-function-return-type": "warn",
+    "no-empty": "warn",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -26,11 +42,6 @@
         "tsx": "never"
       }
     ],
-    "react/jsx-filename-extension": [
-      1,
-      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
-    ],
-    "indent": ["error", 2],
     "spaced-comment": ["error", "always"],
     "operator-linebreak": [
       2,
@@ -47,7 +58,7 @@
     "react/function-component-definition": [
       2,
       {
-        "namedComponents": "function-declaration",
+        "namedComponents": "arrow-function",
         "unnamedComponents": "arrow-function"
       }
     ]

@@ -14,7 +14,7 @@ export const capitalCaseByWord = (word: string): string => {
   return firstLetter + restOfTheLetters;
 };
 
-export const capitalCaseByWords = (words: string[]): string | any => {
+export const capitalCaseByWords = (words: string[]): string => {
   const capitalCasedWords = words?.map((word) => capitalCaseByWord(word));
   return capitalCasedWords.join(' ');
 };
