@@ -23,8 +23,8 @@ const Questions: React.FC<Props> = ({
   <Wrapper key={activity}>
     <h3
       dangerouslySetInnerHTML={{
-        __html: question.roundTitle
-          ? `${capitalize(activity)} / ${capitalize(question.roundTitle)}`
+        __html: question.round_title
+          ? `${capitalize(activity)} / ${capitalize(question.round_title)}`
           : capitalize(activity)
       }}
     />

@@ -6,6 +6,7 @@ import { AnswerObject } from '../../types/Types';
 import Wrapper from './Score.styles';
 //Constants
 //import { ROUND } from '../../constants';
+import {capitalize} from '../../utils';
 
 type Props = {
   activity: string;
@@ -22,7 +23,7 @@ const Score: FC<Props> = ({ activity, userAnswers, startOver }) => {
   
   return (
     <Wrapper>
-      <h3 dangerouslySetInnerHTML={{ __html: activity }} />
+      <h3 dangerouslySetInnerHTML={{ __html: capitalize(activity) }} />
       <h1>Results</h1>
       <ul>
         {userAnswers?.[0].round_title && <li key="ROUND 1">ROUND 1</li>}
